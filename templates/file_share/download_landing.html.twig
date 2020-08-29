@@ -1,0 +1,10 @@
+
+{% block body %}
+    <main>
+        {% if has_custom_secret %}
+            custom secret
+        {% else %}
+            not custom secret
+        {% endif %}
+    </main>
+{% endblock %}
