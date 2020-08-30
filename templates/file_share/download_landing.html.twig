@@ -1,10 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Share your secure link{% endblock %}
 
 {% block body %}
-    <main>
-        {% if has_custom_secret %}
-            custom secret
-        {% else %}
-            not custom secret
-        {% endif %}
+    <main id="download">
+        <section class="section">
+            <div class="box">
+                <h1 class="is-size-1">Download File</h1>
+                <div class="field {% if not has_custom_secret %}no-secret{% endif %}">
+                    {% if has_custom_secret %}
+                        <div class="control">
+                            <input id="file-link" class="input" placeholder="Secret" type="text" value="">
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="field button-field">
+                    <button id="download_shared_file" class="button is-success is-center">
+                        Let's Go
+                    </button>
+                </div>
+                <div id="download_error_container">
+                    <div id="download_error">
+
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const download_button = document.getElementById("download_shared_file");
+        const download_error_container = document.getElementById("download_error_container");
+        const download_error = document.getElementById("download_error");
+
+        download_button.onclick = () => {
+            download_error_container.classList.remove("open");
+            const secret_input = document.getElementById("file-link");
+            let secret = "";
+            if (secret_input) {
+                secret = secret_input.value;
+            }
+            const hash = "{{ hash }}";
+
+            fetch(`/file/check_secret/${hash}/${secret}`, {
+                method: "POST",
+                headers: new Headers({
+                    "content-type": "application/json"
+                })
+            }).then(res => res.json())
+            .then(data => {
+                download_error.innerText = "";
+                if (data.success) {
+                    if (data.secret_valid) {
+                        window.location = `/file/get_file/${hash}/${secret}`;
+                    } else {
+                        download_error.innerText = "Sorry, bad secret";
+                        download_error_container.classList.add("open");
+                    }
+                } else {
+                    download_error.innerText = "Sorry, something went wrong.";
+                    download_error_container.classList.add("open");
+                }
+            });
+        };
+    </script>
 {% endblock %}

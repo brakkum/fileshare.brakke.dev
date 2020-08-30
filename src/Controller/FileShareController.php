@@ -83,10 +83,11 @@ class FileShareController extends AbstractController
             ]);
         }
 
-        $has_custom_secret = !password_verify("", $shared_file->getPrivateKey());
+        $has_custom_secret = !password_verify($this->params->get("default_key"), $shared_file->getPrivateKey());
 
         return $this->render('file_share/download_landing.html.twig', [
-            "has_custom_secret" => $has_custom_secret
+            "has_custom_secret" => $has_custom_secret,
+            "hash" => $hash
         ]);
     }
 
@@ -94,13 +95,13 @@ class FileShareController extends AbstractController
      * @Route(
      *     "/file/get_file/{hash}/{secret}",
      *     name="file_download_with_secret",
-     *     methods={"POST"},
+     *     methods={"GET"},
      *     defaults={"secret"=""}
      * )
      * @Route(
      *     "/file/get_file/{hash}/",
      *     name="file_download_no_secret",
-     *     methods={"POST"},
+     *     methods={"GET"}
      * )
      * @param $hash
      * @param $secret
@@ -115,10 +116,9 @@ class FileShareController extends AbstractController
         ]);
 
         if (!$shared_file) {
-            return JsonResponse::fromJsonString(new JsonResponse([
-                "success" => false,
-                "message" => "No such file exists"
-            ]));
+            return $this->render('file_share/no_file.html.twig', [
+                "hash" => $hash
+            ]);
         }
 
         if (!$secret) {
@@ -126,19 +126,17 @@ class FileShareController extends AbstractController
         }
 
         if (!password_verify($secret, $shared_file->getPrivateKey())) {
-            return JsonResponse::fromJsonString(new JsonResponse([
-                "success" => false,
-                "message" => "Bad secret"
-            ]));
+            return $this->render('file_share/no_file.html.twig', [
+                "hash" => $hash
+            ]);
         }
 
         if ($shared_file->getNumberOfDownloads() >= $shared_file->getAllowedDownloads()) {
-            return JsonResponse::fromJsonString(new JsonResponse([
-                "success" => false,
-                "message" => "Max downloads exceeded"
-            ]));
+            return $this->render('file_share/no_file.html.twig', [
+                "hash" => $hash
+            ]);
         }
-
+        $this->logger->alert("made it");
         $shared_file->setNumberOfDownloads($shared_file->getNumberOfDownloads() + 1);
         $em = $this->getDoctrine()->getManager();
         $em->persist($shared_file);
@@ -155,6 +153,47 @@ class FileShareController extends AbstractController
             $shared_file->getName()
         );
         $response->headers->set('Content-Disposition', $disposition);
+        return $response;
+    }
+
+
+    /**
+     * @Route(
+     *     "/file/check_secret/{hash}/{secret}",
+     *     name="check_secret",
+     *     methods={"POST"}
+     * )
+     * @Route(
+     *     "/file/check_secret/{hash}/",
+     *     name="check_secret_empty",
+     *     methods={"POST"}
+     * )
+     * @param $hash
+     * @param $secret
+     * @return JsonResponse
+     */
+    public function checkIfSecretValid($hash, $secret = "")
+    {
+        $repo = $this->getDoctrine()->getRepository(SharedFile::class);
+        $shared_file = $repo->findOneBy([
+            "hash_of_file_contents" => $hash
+        ]);
+        if (!$shared_file) {
+            $response = new JsonResponse();
+            $response->setData([
+                "success" => false
+            ]);
+            return $response;
+        }
+        if (!$secret) {
+            $secret = $this->params->get("default_key");
+        }
+        $secret_matches = password_verify($secret, $shared_file->getPrivateKey());
+        $response = new JsonResponse();
+        $response->setData([
+            "success" => true,
+            "secret_valid" => $secret_matches
+        ]);
         return $response;
     }
 

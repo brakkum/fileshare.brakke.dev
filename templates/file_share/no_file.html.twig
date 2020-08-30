@@ -1,6 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ErrorController!{% endblock %}
 
 {% block body %}
-    <main>
-        Sorry, we could'nt find what you were looking for.
+    <main id="error">
+        <section class="section">
+            <div class="box has-text-centered">
+                <h3 class="is-size-3">
+                    Sorry, we couldn't find that file.
+                </h3>
+                <a href="/">
+                    Home
+                </a>
+            </div>
+        </section>
     </main>
 {% endblock %}
