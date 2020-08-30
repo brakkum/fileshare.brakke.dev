@@ -2,6 +2,7 @@
 namespace App\Form\Type;
 
 use App\Entity\SharedFile;
+use App\Utilities\Constants;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -16,7 +17,7 @@ class SharedFileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $max_file_size = MAX_FILE_SIZE;
+        $max_file_size = Constants::MAX_FILE_SIZE;
 
         $builder
             ->add("file", FileType::class, [

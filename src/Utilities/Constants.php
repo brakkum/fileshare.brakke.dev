@@ -1,8 +1,9 @@
 <?php
+namespace App\Utilities;
 
-define("UPLOAD_DIRECTORY", "/file_uploads/");
-define("MAX_FILE_SIZE", "512M");
-define("MINIMUM_FREE_SPACE", 21474836480); // 20GB in bytes
-//define("FILE_LIFETIME_SECONDS", 12 * 60 * 60); // 12 hours
-define("FILE_LIFETIME_SECONDS", 600); // 10 minutes
-define("URL", $_SERVER["SERVER_NAME"]);
+class Constants {
+    public const UPLOAD_DIRECTORY = "/file_uploads/";
+    public const MAX_FILE_SIZE = "5G";
+    public const MINIMUM_FREE_SPACE = 21474836480; // 20GB in bytes
+    public const FILE_LIFETIME_SECONDS = 12 * 60 * 60; // 12 hours
+}

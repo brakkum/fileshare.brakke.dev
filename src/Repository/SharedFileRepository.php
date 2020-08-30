@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\SharedFile;
+use App\Utilities\Constants;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
@@ -26,7 +27,7 @@ class SharedFileRepository extends ServiceEntityRepository
     public function getDownloadsOutOrOlderThanLimit()
     {
         $time_now = new \DateTime();
-        $time_ago = $time_now->modify(-FILE_LIFETIME_SECONDS." seconds");
+        $time_ago = $time_now->modify(-(Constants::FILE_LIFETIME_SECONDS)." seconds");
 
         $qb = $this->createQueryBuilder("f");
         $query = $qb->

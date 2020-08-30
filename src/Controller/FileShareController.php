@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\SharedFile;
 use App\Repository\SharedFileRepository;
+use App\Utilities\Constants;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -142,7 +143,7 @@ class FileShareController extends AbstractController
         $em->persist($shared_file);
         $em->flush();
 
-        $file_path = $this->params->get('project_dir').UPLOAD_DIRECTORY.$shared_file->getHashOfFileContents();
+        $file_path = $this->params->get('project_dir').Constants::UPLOAD_DIRECTORY.$shared_file->getHashOfFileContents();
         $file = file_get_contents($file_path);
         $file = decrypt($file, $secret);
 
@@ -211,6 +212,6 @@ class FileShareController extends AbstractController
 
     public function getDownloadLinkForFile(SharedFile $file)
     {
-        return URL."/file/download/".$file->getHashOfFileContents();
+        return $_SERVER["SERVER_NAME"]."/file/download/".$file->getHashOfFileContents();
     }
 }

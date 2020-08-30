@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\SharedFile;
 use App\Form\Type\SharedFileType;
+use App\Utilities\Constants;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -37,13 +38,13 @@ class HomeController extends AbstractController
             /** @var UploadedFile $upload */
             $upload = $shared_file_form->get('file')->getData();
 
-            $upload_directory = $this->params->get('project_dir').UPLOAD_DIRECTORY;
+            $upload_directory = $this->params->get('project_dir').Constants::UPLOAD_DIRECTORY;
             if (!is_dir($upload_directory)) {
                 mkdir($upload_directory);
             }
 
             $free_disk_space = disk_free_space($upload_directory);
-            $available_space = $free_disk_space - MINIMUM_FREE_SPACE;
+            $available_space = $free_disk_space - Constants::MINIMUM_FREE_SPACE;
             if ($available_space <= $upload->getSize() * 2) {
                 return $this->redirectToRoute("upload_error");
             }
