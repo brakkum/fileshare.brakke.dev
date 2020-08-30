@@ -14,8 +14,6 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-/.idea
-.DS_Store
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
@@ -23,3 +21,9 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###> other
+/.idea
+.DS_Store
+/file_uploads
+###<

@@ -37,7 +37,12 @@ class HomeController extends AbstractController
             /** @var UploadedFile $upload */
             $upload = $shared_file_form->get('file')->getData();
 
-            $free_disk_space = disk_free_space($this->params->get('project_dir').UPLOAD_DIRECTORY);
+            $upload_directory = $this->params->get('project_dir').UPLOAD_DIRECTORY;
+            if (!is_dir($upload_directory)) {
+                mkdir($upload_directory);
+            }
+
+            $free_disk_space = disk_free_space($upload_directory);
             $available_space = $free_disk_space - MINIMUM_FREE_SPACE;
             if ($available_space <= $upload->getSize() * 2) {
                 return $this->redirectToRoute("upload_error");
@@ -57,7 +62,7 @@ class HomeController extends AbstractController
             $private_key = $shared_file->getPrivateKey();
             $shared_file->setPrivateKey(password_hash($private_key, PASSWORD_BCRYPT));
 
-            $unencrypted_file_path = $this->params->get('project_dir').UPLOAD_DIRECTORY;
+            $unencrypted_file_path = $upload_directory;
             $unencrypted_file_hash = hash("sha256", file_get_contents($upload->getPathname()));
 
             $upload->move(

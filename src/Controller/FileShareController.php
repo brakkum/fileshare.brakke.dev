@@ -34,7 +34,7 @@ class FileShareController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(SharedFile::class);
         $shared_file = $repo->findOneBy([
             "hash_of_file_contents" => $hash,
-//            "has_been_shared" => false TODO:uncomment
+            "has_been_shared" => false
         ]);
 
         if (!$shared_file) {
