@@ -49,8 +49,6 @@ class HomeController extends AbstractController
             $available_space = $free_disk_space - Constants::MINIMUM_FREE_SPACE;
             $upload_size = $upload->getSize();
             if ($available_space <= $upload_size * 2) {
-                $this->logger->alert("avail space: $available_space");
-                $this->logger->alert("upload size: $upload_size");
                 return $this->redirectToRoute("upload_error");
             }
 
