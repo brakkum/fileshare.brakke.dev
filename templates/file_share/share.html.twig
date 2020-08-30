@@ -1,9 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FileShareController!{% endblock %}
+{% block title %}Share your secure link{% endblock %}
 
 {% block body %}
-    <main>
-        {{ link_url }}
+    <main id="share">
+        <section class="section">
+            <div class="box">
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                        <input id="file-link" class="input" type="text" value="{{ link_url }}" readonly="readonly">
+                    </div>
+                    <div class="control">
+                        <a id="copy-link" class="button is-info">
+                            Copy Link
+                        </a>
+                    </div>
+                </div>
+                {% if has_linkstrip_url %}
+                    <div class="linkstrip">
+                        Link created with <a href="https://linkst.rip/">linkst.rip</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
     </main>
 {% endblock %}

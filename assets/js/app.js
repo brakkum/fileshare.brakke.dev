@@ -1,11 +1,13 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
 
 
+// share page
+const copy_link = document.getElementById("copy-link");
+
+copy_link.onclick = () => {
+    const link_url = document.getElementById("file-link");
+    link_url.select();
+    link_url.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    link_url.classList.add("is-success");
+}
+// end share page

@@ -1,0 +1,56 @@
+
+#index {
+  width: 100%;
+
+  section {
+    .title-and-description {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      flex: 1 1 300px;
+      flex-wrap: wrap;
+      align-items: center;
+
+      .child {
+        width: 50%;
+        min-width: 300px;
+        flex-grow: 1;
+      }
+    }
+
+    .box {
+      max-width: 600px;
+      margin: auto;
+
+      label {
+        display: block;
+      }
+
+      input, button {
+        margin: 5px;
+      }
+
+      .button-row {
+        display: flex;
+        height: auto;
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+    }
+  }
+
+  #leaving {
+    progress {
+      transition: max-height .5s;
+      max-height: 0;
+      width: 50%;
+      margin: auto;
+    }
+
+    &.now {
+      progress {
+        max-height: 200px;
+      }
+    }
+  }
+}

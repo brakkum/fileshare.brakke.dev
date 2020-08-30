@@ -52,12 +52,15 @@ class FileShareController extends AbstractController
         $link = $this::getLinkstripLink($shared_file);
         if ($link->success) {
             $link_url = $link->url;
+            $has_linkstrip_url = true;
         } else {
             $link_url = $this->getDownloadLinkForFile($shared_file);
+            $has_linkstrip_url = false;
         }
 
         return $this->render('file_share/share.html.twig', [
-            'link_url' => $link_url,
+            "link_url" => $link_url,
+            "has_linkstrip_url" => $has_linkstrip_url
         ]);
     }
 
