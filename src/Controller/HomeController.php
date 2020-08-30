@@ -44,7 +44,7 @@ class HomeController extends AbstractController
                 mkdir($upload_directory);
             }
 
-            $free_disk_space = disk_free_space($upload_directory);
+            $free_disk_space = disk_free_space("/");
             $available_space = $free_disk_space - Constants::MINIMUM_FREE_SPACE;
             if ($available_space <= $upload->getSize() * 2) {
                 return $this->redirectToRoute("upload_error");
