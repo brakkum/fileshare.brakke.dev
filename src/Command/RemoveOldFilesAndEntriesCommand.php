@@ -2,6 +2,7 @@
 namespace App\Command;
 
 use App\Entity\SharedFile;
+use App\Utilities\Constants;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -39,7 +40,7 @@ class RemoveOldFilesAndEntriesCommand extends Command
 
         if ($old_files != null) {
             foreach ($old_files as $file) {
-                $file_path = $this->path.UPLOAD_DIRECTORY.$file->getHashOfFileContents();
+                $file_path = $this->path.Constants::UPLOAD_DIRECTORY.$file->getHashOfFileContents();
                 if (file_exists($file_path)) {
                     unlink($file_path);
                 }
