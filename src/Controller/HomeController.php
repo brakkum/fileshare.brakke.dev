@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\SharedFile;
 use App\Form\Type\SharedFileType;
 use App\Utilities\Constants;
+use App\Utilities\EncryptionTools;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -73,7 +74,7 @@ class HomeController extends AbstractController
 
             $unencrypted_file_full_path = $unencrypted_file_path.$unencrypted_file_hash;
             $upload_contents = file_get_contents($unencrypted_file_full_path);
-            $upload_contents = encrypt($upload_contents, $private_key);
+            $upload_contents = EncryptionTools::encrypt($upload_contents, $private_key);
             $encrypted_file_hash = hash("sha256", $upload_contents);
             $shared_file->setHashOfFileContents($encrypted_file_hash);
             $encrypted_file_full_path = $unencrypted_file_path.$encrypted_file_hash;

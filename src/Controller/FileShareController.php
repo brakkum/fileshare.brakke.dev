@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\SharedFile;
 use App\Repository\SharedFileRepository;
 use App\Utilities\Constants;
+use App\Utilities\EncryptionTools;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -145,7 +146,7 @@ class FileShareController extends AbstractController
 
         $file_path = $this->params->get('project_dir').Constants::UPLOAD_DIRECTORY.$shared_file->getHashOfFileContents();
         $file = file_get_contents($file_path);
-        $file = decrypt($file, $secret);
+        $file = EncryptionTools::decrypt($file, $secret);
 
         // return file
         $response = new Response($file);
