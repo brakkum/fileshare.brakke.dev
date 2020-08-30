@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     project_dir: "%kernel.project_dir%"
+    default_key: "%env(DEFAULT_KEY)%"
 
 services:
     # default configuration for services in *this* file

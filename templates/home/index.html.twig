@@ -3,8 +3,44 @@
 {% block title %}Secure File Transfer{% endblock %}
 
 {% block body %}
-    <main>
-        {{ form_start(form) }}
-        {{ form_end(form) }}
+    <main id="index">
+        <section class="section">
+            <div class="title-and-description">
+                <h1 class="is-size-1 has-text-centered child">
+                    Secure File Sharing
+                </h1>
+                <div class="is-size-6 has-text-centered child">
+                    <ul>
+                        <li>
+                            Only downloadable the number of times you want
+                        </li>
+                        <li>
+                            Deleted after 12 hours, or when the max downloads are reached
+                        </li>
+                        <li>
+                            Even if no secret is supplied, there is a server-side secret used by default
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="box">
+                {{ form(form) }}
+            </div>
+        </section>
+        <div id="leaving">
+            <progress class="progress"></progress>
+        </div>
     </main>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        window.onbeforeunload = () => {
+            const leaving = document.getElementById("leaving");
+            leaving.classList.add("now");
+        };
+    </script>
 {% endblock %}

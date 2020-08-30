@@ -9,13 +9,18 @@ So, I figured I'd try to make a quick and dirty one with Symfony.
 
 - Get the [Symfony CLI tool](https://symfony.com/download)
 - Clone the repo
-- Run `composer install` in repository root
+- Run commands to install dependencies in repository root
+  - `composer install`
+  - `npm install`
 - Make a `.env.local` file based off of `.env`
 - Run these two commands to setup the database:
   - `php bin/console make:migration`
   - `php bin/console doctrine:migrations:migrate`
-- Run the below command to start a development server
+- Run the below commands to start a development server and enable style compilation
   - `symfony server:start`
+  - `npm run watch`
+
+The Stylesheet is compiled from /assets/css/app.scss
 
 The below command is run like a cron to clear out old files.
 - `php bin/console app:remove-files`

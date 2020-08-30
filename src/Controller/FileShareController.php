@@ -110,13 +110,16 @@ class FileShareController extends AbstractController
         $shared_file = $repo->findOneBy([
             "hash_of_file_contents" => $hash
         ]);
-        $this->logger->alert(print_r($shared_file, true));
 
         if (!$shared_file) {
             return JsonResponse::fromJsonString(new JsonResponse([
                 "success" => false,
                 "message" => "No such file exists"
             ]));
+        }
+
+        if (!$secret) {
+            $secret = $this->params->get("default_key");
         }
 
         if (!password_verify($secret, $shared_file->getPrivateKey())) {

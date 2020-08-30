@@ -28,21 +28,37 @@ class SharedFileType extends AbstractType
                         "maxSize" => $max_file_size,
                         "maxSizeMessage" => "File size must be smaller than $max_file_size"
                     ])
+                ],
+                "attr" => [
+                    "class" => "input"
                 ]
             ])
             ->add("allowed_downloads", IntegerType::class, [
                 "label" => "Number of allowed downloads",
                 "mapped" => true,
                 "required" => false,
-                "data" => "1"
+                "data" => "1",
+                "attr" => [
+                    "class" => "input",
+                    "min" => 1
+                ]
             ])
             ->add("private_key", TextType::class, [
                 "label" => "Secret phrase needed to download",
                 "mapped" => true,
                 "required" => false,
-                "data" => ""
+                "attr" => [
+                    "class" => "input"
+                ]
             ])
-            ->add("submit", SubmitType::class);
+            ->add("submit", SubmitType::class, [
+                'row_attr' => [
+                    'class' => 'button-row'
+                ],
+                "attr" => [
+                    "class" => "button is-success"
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

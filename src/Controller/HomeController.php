@@ -43,12 +43,17 @@ class HomeController extends AbstractController
                 return $this->redirectToRoute("upload_error");
             }
 
+
+
             $file_name = $upload->getClientOriginalName();
             $shared_file->setName($file_name);
             if ($shared_file->getAllowedDownloads() <= 0) {
                 $shared_file->setAllowedDownloads(1);
             }
 
+            if (!$shared_file->getPrivateKey()) {
+                $shared_file->setPrivateKey($this->params->get("default_key"));
+            }
             $private_key = $shared_file->getPrivateKey();
             $shared_file->setPrivateKey(password_hash($private_key, PASSWORD_BCRYPT));
 

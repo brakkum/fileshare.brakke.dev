@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SharedFileRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -44,7 +45,7 @@ class SharedFile
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $private_key = "";
+    private $private_key;
 
     /**
      * @ORM\Column(type="integer")
