@@ -6,7 +6,6 @@ use App\Entity\SharedFile;
 use App\Form\Type\SharedFileType;
 use App\Utilities\Constants;
 use App\Utilities\EncryptionTools;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -29,10 +28,9 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      * @param Request $request
-     * @param LoggerInterface $logger
      * @return Response
      */
-    public function index(Request $request, LoggerInterface $logger)
+    public function index(Request $request)
     {
         $shared_file = new SharedFile();
         $shared_file_form = $this->createForm(SharedFileType::class, $shared_file);
