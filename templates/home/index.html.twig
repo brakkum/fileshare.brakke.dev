@@ -38,7 +38,9 @@
 
 {% block javascripts %}
     <script>
-        window.onbeforeunload = () => {
+        const form = document.querySelector("form[name='shared_file']");
+
+        form.onsubmit = () => {
             const leaving = document.getElementById("leaving");
             leaving.classList.add("now");
         };
