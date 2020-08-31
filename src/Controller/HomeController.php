@@ -73,22 +73,12 @@ class HomeController extends AbstractController
                 )
             );
 
-            $unencrypted_file_path = $upload_directory;
-            $unencrypted_file_hash = hash("sha256", file_get_contents($upload->getPathname()));
-
-            $upload->move(
-                $unencrypted_file_path,
-                $unencrypted_file_hash
-            );
-
-            $unencrypted_file_full_path = $unencrypted_file_path.$unencrypted_file_hash;
-            $upload_contents = file_get_contents($unencrypted_file_full_path);
+            $upload_contents = file_get_contents($upload->getPathname());
             $upload_contents = EncryptionTools::encrypt($upload_contents, $private_key);
             $encrypted_file_hash = hash("sha256", $upload_contents);
             $shared_file->setHashOfFileContents($encrypted_file_hash);
-            $encrypted_file_full_path = $unencrypted_file_path.$encrypted_file_hash;
+            $encrypted_file_full_path = $upload_directory.$encrypted_file_hash;
             file_put_contents($encrypted_file_full_path, $upload_contents);
-            unlink($unencrypted_file_full_path);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($shared_file);
