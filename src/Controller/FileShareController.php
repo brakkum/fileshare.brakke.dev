@@ -152,7 +152,13 @@ class FileShareController extends AbstractController
         $response = new Response($file);
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $shared_file->getName()
+            openssl_decrypt(
+                $shared_file->getName(),
+                "AES-256-CBC",
+                $secret,
+                0,
+                $this->params->get("default_key")
+            )
         );
         $response->headers->set('Content-Disposition', $disposition);
         return $response;

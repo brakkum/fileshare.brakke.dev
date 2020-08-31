@@ -52,10 +52,6 @@ class HomeController extends AbstractController
                 return $this->redirectToRoute("upload_error");
             }
 
-
-
-            $file_name = $upload->getClientOriginalName();
-            $shared_file->setName($file_name);
             if ($shared_file->getAllowedDownloads() <= 0) {
                 $shared_file->setAllowedDownloads(1);
             }
@@ -65,6 +61,17 @@ class HomeController extends AbstractController
             }
             $private_key = $shared_file->getPrivateKey();
             $shared_file->setPrivateKey(password_hash($private_key, PASSWORD_BCRYPT));
+
+            $file_name = $upload->getClientOriginalName();
+            $shared_file->setName(
+                openssl_encrypt(
+                    $file_name,
+                    "AES-256-CBC",
+                    $private_key,
+                    0,
+                    $this->params->get("default_key")
+                )
+            );
 
             $unencrypted_file_path = $upload_directory;
             $unencrypted_file_hash = hash("sha256", file_get_contents($upload->getPathname()));
