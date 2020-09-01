@@ -53,11 +53,11 @@ class SharedFileType extends AbstractType
                 ]
             ])
             ->add("submit", SubmitType::class, [
-                'row_attr' => [
+                "row_attr" => [
                     'class' => 'button-row'
                 ],
                 "attr" => [
-                    "class" => "button is-success"
+                    "class" => "button is-dark"
                 ]
             ]);
     }
