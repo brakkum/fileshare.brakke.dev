@@ -12,6 +12,7 @@ Built with:
 - Node 13.12
 - Symfony 5.1
 
+Steps:
 - Get the [Symfony CLI tool](https://symfony.com/download)
 - Clone the repo
 - Run commands to install dependencies in repository root
