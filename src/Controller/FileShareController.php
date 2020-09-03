@@ -138,7 +138,7 @@ class FileShareController extends AbstractController
                 "hash" => $hash
             ]);
         }
-        $this->logger->alert("made it");
+
         $shared_file->setNumberOfDownloads($shared_file->getNumberOfDownloads() + 1);
         $em = $this->getDoctrine()->getManager();
         $em->persist($shared_file);
