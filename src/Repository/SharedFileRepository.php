@@ -31,7 +31,7 @@ class SharedFileRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder("f");
         $query = $qb->
-            where("f.allowed_downloads >= f.number_of_downloads")->
+            where("f.number_of_downloads >= f.allowed_downloads")->
             orWhere("f.time_created <= :time_ago")->
             setParameter("time_ago", $time_ago)->
             getQuery();
