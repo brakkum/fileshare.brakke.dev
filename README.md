@@ -51,6 +51,12 @@ The below command is run like a cron to clear out old database records and files
 I was having issues with uploads of any substantial size, but realized it was due to PHP directives.
 Be sure to set PHP ini directives for `post_max_size`, `upload_max_filesize`, and `memory_limit` accordingly.
 
+## Deployment
+
+Running `npm run build` will build the stylesheets to `/public/build/`.
+The site root should be `/public/`.
+When deploying changes, you'll likely need to clear the cache with `rm -rf var/cache/*`.
+
 ## TODO
 
 - Don't use the secret in plain text in the URL when requesting a download
