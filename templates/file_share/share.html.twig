@@ -6,18 +6,14 @@
     <main id="share">
         <section class="section">
             <div class="box">
-                <h4 class="is-size-4 file-uploaded">
+                <h1 class="file-uploaded">
                     File uploaded!
-                </h4>
-                <div class="field has-addons">
-                    <div class="control is-expanded">
-                        <input id="file-link" class="input" type="text" value="{{ link_url }}" readonly="readonly">
-                    </div>
-                    <div class="control">
-                        <a id="copy-link" class="button is-info">
-                            Copy Link
-                        </a>
-                    </div>
+                </h1>
+                <div class="fields">
+                    <input id="file-link" class="field" type="text" value="{{ link_url }}" readonly="readonly">
+                    <a id="copy-link" class="field">
+                        Copy Link
+                    </a>
                 </div>
                 {% if has_linkstrip_url %}
                     <div class="linkstrip">

@@ -44,18 +44,7 @@
     margin: 10px;
   }
 
-  #leaving {
-    progress {
-      transition: max-height .5s;
-      max-height: 0;
-      width: 50%;
-      margin: auto;
-    }
-
-    &.now {
-      progress {
-        max-height: 200px;
-      }
-    }
+  #form_status {
+    //text-align: center;
   }
 }

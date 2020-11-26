@@ -27,8 +27,8 @@
         <section class="section">
             <div class="box">
                 {{ form(form) }}
-                <div id="leaving">
-                    <progress class="progress is-info"></progress>
+                <div id="form_status">
+
                 </div>
             </div>
         </section>
@@ -39,10 +39,19 @@
 {% block javascripts %}
     <script>
         const form = document.querySelector("form[name='shared_file']");
+        const submit = document.getElementById("shared_file_submit");
+        const form_status = document.getElementById("form_status");
 
+        const uploading = "Uploading";
         form.onsubmit = () => {
-            const leaving = document.getElementById("leaving");
-            leaving.classList.add("now");
+            submit.disabled = true;
+            let i = 0;
+            setInterval(() => {
+                const numPeriods = i % 3 + 1;
+                form_status.innerText = `${uploading}${".".repeat(numPeriods)}`;
+                i++;
+            }, 500);
         };
+
     </script>
 {% endblock %}

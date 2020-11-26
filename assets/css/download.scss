@@ -6,8 +6,16 @@
     margin: auto;
   }
 
+  .fields {
+    margin-top: 50px;
+  }
+
   .field.no-secret {
     height: 20px;
+  }
+
+  #file-link {
+    margin: 20px auto;
   }
 
   .button-field {

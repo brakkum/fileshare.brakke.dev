@@ -1,31 +1,4 @@
 
-@import "bulma";
-
-html {
-    width: 100vw;
-    height: 100vh;
-    background-color: $dark;
-}
-
-.box {
-    background-color: $grey-dark;
-    color: $light;
-    input {
-        background-color: $grey-dark;
-        color: $light;
-        &::placeholder {
-            color: $grey;
-        }
-    }
-}
-
-a {
-    color: $turquoise;
-    &:hover {
-        color: $yellow;
-    }
-}
-
 @import "index";
 @import "share";
 @import "download";

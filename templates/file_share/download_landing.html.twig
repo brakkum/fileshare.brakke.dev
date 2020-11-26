@@ -7,21 +7,23 @@
         <section class="section">
             <div class="box">
                 <h1 class="is-size-1">Download File</h1>
-                <div class="field {% if not has_custom_secret %}no-secret{% endif %}">
-                    {% if has_custom_secret %}
-                        <div class="control">
-                            <input id="file-link" class="input" placeholder="Secret" type="text" value="">
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="field button-field">
-                    <button id="download_shared_file" class="button is-success is-center">
-                        Let's Go
-                    </button>
-                </div>
-                <div id="download_error_container">
-                    <div id="download_error">
+                <div class="fields">
+                    <div class="field {% if not has_custom_secret %}no-secret{% endif %}">
+                        {% if has_custom_secret %}
+                            <div class="control">
+                                <input id="file-link" class="input" placeholder="Secret" type="text" value="">
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="field button-field">
+                        <button id="download_shared_file" class="button is-success is-center">
+                            Let's Go
+                        </button>
+                    </div>
+                    <div id="download_error_container">
+                        <div id="download_error">
 
+                        </div>
                     </div>
                 </div>
             </div>
